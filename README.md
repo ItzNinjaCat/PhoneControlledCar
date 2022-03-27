@@ -1,2 +1,2 @@
 # PhoneControlledCar
-An toy car controlled via phone application that provides video feed over Wi-Fi
+A toy car controlled via phone application that provides video feed over Wi-Fi
