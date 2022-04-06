@@ -8,12 +8,10 @@ from kivy.uix.switch import Switch
 from kivy.uix.label import Label
 from kivy.config import Config 
 from kivy.lang.builder import Builder
-from kivy.uix.camera import Camera
+from kivy.uix.video import Video
+from kivy.clock import Clock
+from kivy.graphics.texture import Texture
 from kivy.core.window import Window
-<<<<<<< Updated upstream:main.py
-#import cv2
-#import time
-=======
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 
@@ -44,24 +42,6 @@ def hide_widget(wid, dohide=True):
 		wid.saved_attrs = wid.height, wid.size_hint_y, wid.opacity, wid.disabled
 		wid.height, wid.size_hint_y, wid.opacity, wid.disabled = 0, None, 0, True
 
->>>>>>> Stashed changes:kivy_tests/main.py
-
-
-
-import socket
-
-host = '192.168.75.163'  # as both code is running on same pc
-port = 5000  # socket server port number
-
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # instantiate
-client_socket.connect((host, port))  # connect to the server
-
-
-
-
-
-
-
 
 class Button_left(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
@@ -86,20 +66,6 @@ class Button_left(ButtonBehavior, Image):
 			steering.send(message.encode())
 
 class Button_right(ButtonBehavior, Image):
-<<<<<<< Updated upstream:main.py
-    def __init__(self, **kwargs):
-        super(Button_right, self).__init__(**kwargs)
-        self.source = 'right.png'
-        self.pos_hint = {'x' : 0.25, 'y' : 0.1}
-        self.size_hint = (None, None)
-    def on_press(self):
-        message = 'right'
-        client_socket.send(message.encode())  # send message
-        self.source = 'right_down.png'
-
-    def on_release(self):
-        self.source = 'right.png'
-=======
 	def __init__(self, **kwargs):
 		super(Button_right, self).__init__(**kwargs)
 		self.source = 'right.png'
@@ -120,7 +86,6 @@ class Button_right(ButtonBehavior, Image):
 			message = "rightOFF"
 			steering.send(message.encode())	
 
->>>>>>> Stashed changes:kivy_tests/main.py
 class Button_forward(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
 		super(Button_forward, self).__init__(**kwargs)
@@ -143,36 +108,11 @@ class Button_forward(ButtonBehavior, Image):
 			throttle.send(message.encode())
 
 class Button_backward(ButtonBehavior, Image):
-<<<<<<< Updated upstream:main.py
-    def __init__(self, **kwargs):
-        super(Button_backward, self).__init__(**kwargs)
-        self.source = 'backward.png'
-        self.pos_hint = {'x' : 0.85, 'y' : 0.05}
-        self.size_hint = (None, None)
-    def on_press(self):
-        self.source = 'backward_down.png'
-
-    def on_release(self):
-        self.source = 'backward.png'
-
-#cam = Camera(resolution=(Window.width, Window.height))
-
-class Float_layout(FloatLayout):
-	def hide_widget(self, wid, dohide=True):
-		if hasattr(wid, 'saved_attrs'):
-			if not dohide:
-				wid.height, wid.size_hint_y, wid.opacity, wid.disabled = wid.saved_attrs
-				del wid.saved_attrs
-		elif dohide:
-			wid.saved_attrs = wid.height, wid.size_hint_y, wid.opacity, wid.disabled
-			wid.height, wid.size_hint_y, wid.opacity, wid.disabled = 0, None, 0, True
-=======
 	def __init__(self, **kwargs):
 		super(Button_backward, self).__init__(**kwargs)
 		self.source = 'backward.png'
 		self.pos_hint = {'x' : 0.85, 'y' : 0.07}
 		self.size_hint = (0.1, 0.1)
->>>>>>> Stashed changes:kivy_tests/main.py
 
 	def on_press(self):
 		if not button_state_dict['forward']:
@@ -188,16 +128,6 @@ class Float_layout(FloatLayout):
 			message = "backwardOFF"
 			throttle.send(message.encode())
 
-<<<<<<< Updated upstream:main.py
-	def switch_callback(self, switchObject, switchValue):
-		print("here")
-		if(switchValue):
-			cam.play = True
-			self.hide_widget(cam, False)
-		else:
-			cam.play = False
-			self.hide_widget(cam)
-=======
 class Distance_display(Label):
 	def __init__(self, **kwargs):
 		super(Distance_display, self).__init__(**kwargs)
@@ -272,7 +202,6 @@ class Button_settings(ButtonBehavior, Image):
 				
 		except:
 			pass
->>>>>>> Stashed changes:kivy_tests/main.py
 
 	def popup_bttn(self, dt = None):
 		global socket_connection_status, button_state_dict, throttle, steering, frames_per_second, distance_update_timer
@@ -365,12 +294,6 @@ class Float_layout(FloatLayout):
 		global socket_connection_status, button_state_dict, throttle, steering, flask_url, distance_thread
 	
 		super().__init__(**kwargs)
-<<<<<<< Updated upstream:main.py
-		#self.add_widget(cam)
-		#cam.play = False
-		#self.hide_widget(cam)
-		switch_camera = Switch(active = False, pos_hint = {'x' : 0.43, 'y' : 0.45})
-=======
 		self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
 		self._keyboard.bind(on_key_down=self._on_key_down)
 		self._keyboard.bind(on_key_up=self._on_key_up)
@@ -386,7 +309,6 @@ class Float_layout(FloatLayout):
 
 		self.add_widget(self.img)
 		hide_widget(self.img)
->>>>>>> Stashed changes:kivy_tests/main.py
 		self.add_widget(switch_camera)
 		self.add_widget(btn_right)
 		self.add_widget(btn_left)
@@ -456,14 +378,6 @@ class Float_layout(FloatLayout):
 					btn_settings.on_press()
 
 		switch_camera.bind(active = self.switch_callback)
-<<<<<<< Updated upstream:main.py
-		switch_AI = Switch(active = False, pos_hint = {'x' : -0.43, 'y' : 0.45})
-		self.add_widget(switch_AI)
-		self.add_widget(Button_right())
-		self.add_widget(Button_left())
-		self.add_widget(Button_forward())
-		self.add_widget(Button_backward())
-=======
 		self.capture = video_feed
 		Clock.schedule_interval(self.camera_update, 1 / 120)
 		distance_thread = Thread(target = Clock.schedule_interval, args=(self.distance_update,  1 / 120))
@@ -473,21 +387,12 @@ class Float_layout(FloatLayout):
 		self._keyboard.unbind(on_key_down=self._on_key_down)
 		self._keyboard.unbind(on_key_up=self._on_key_up)
 		self._keyboard = None
->>>>>>> Stashed changes:kivy_tests/main.py
 		
 	def _on_key_down(self, keyboard, keycode, text, modifiers):
 		if keycode[1] == 'w' or keycode[1] == 'up':
 			if not button_state_dict['backward'] and not button_state_dict['forward'] :
 				btn_forward.on_press()
 
-<<<<<<< Updated upstream:main.py
-class DemoApp(App):
-	def build(self):
-		return Float_layout()
-	
-DemoApp().run()
-client_socket.close()  # close the connection
-=======
 		elif keycode[1] == 's' or keycode[1] == 'down':
 			if not button_state_dict['forward'] and not button_state_dict['backward']:
 				btn_backward.on_press()
@@ -568,4 +473,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
->>>>>>> Stashed changes:kivy_tests/main.py
