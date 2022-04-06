@@ -13,7 +13,7 @@ package.domain = org.test
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,atlas,json
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -37,7 +37,11 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
+<<<<<<< Updated upstream:buildozer.spec
 requirements = python3,kivy==2.0.0, opencv-python-headless, numpy
+=======
+requirements = python3,kivy==2.0.0,kivymd,opencv-python==4.5.5.64,numpy==1.22.3
+>>>>>>> Stashed changes:kivy_tests/buildozer.spec
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -262,7 +266,11 @@ fullscreen = 1
 
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 # In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
+<<<<<<< Updated upstream:buildozer.spec
 android.archs = x86_64
+=======
+android.archs = arm64-v8a, armeabi-v7a, x86_64, x86
+>>>>>>> Stashed changes:kivy_tests/buildozer.spec
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
