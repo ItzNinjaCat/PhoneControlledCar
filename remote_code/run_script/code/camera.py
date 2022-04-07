@@ -1,7 +1,5 @@
 import cv2
-import imutils
 import time
-import numpy as np
 
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 class Camera(object):
