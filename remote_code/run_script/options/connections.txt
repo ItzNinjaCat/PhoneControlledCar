@@ -1,3 +1,3 @@
-security = 1 # security flag - set to 0 by default, changing it to 1 requires adding a list of trusted mac adresses in the trusted.txt file separated by commas
+security = 0 # security flag - set to 0 by default, changing it to 1 requires adding a list of trusted mac adresses in the trusted.txt file separated by commas
 ctrl_socket_port = 50000 # port for the socket server - set to 50000 by default
 flask_port = 50200 # port for the flask server - set to 50200 by default
