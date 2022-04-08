@@ -23,7 +23,7 @@ if __name__ == '__main__':
 			backwardOFF()
 			rightOFF()
 			leftOFF()
-			destroy()
 			control_socket_thread._stop()
+			destroy()
 		except:
 			pass
