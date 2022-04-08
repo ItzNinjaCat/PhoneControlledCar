@@ -39,6 +39,7 @@ pip3 install requests
  * Raspberry Pi 3 Model B+
  * Raspberry Pi 4 Model A
  * Raspberry Pi 3 Model B
+
 За подробно ръководсво как да инсталирате опреационна система на Raspberry Pi, както и допълнителни разяснения за самото SBC кликнете [тук](https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started) 
 6) Опрерационната система Raspbian, използвана от Raspberry Pi по подразбиране има Python и pip. Единственото, което трябва да направите е да инстлаирате нужните библиотеки със следните команди в терминала:
 ```
