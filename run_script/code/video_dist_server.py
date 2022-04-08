@@ -4,7 +4,9 @@ from camera import Camera
 import arpreq
 import os
 
-from GPIO_halnding import distnace
+from conn_read import getSecurityFlag
+
+from GPIO_handling import distance
 
 cam = Camera()
 app = Flask(__name__)

@@ -7,6 +7,10 @@ from GPIO_handling import setup, destroy, forwardOFF, backwardOFF, rightOFF, lef
 from video_dist_server import app
 
 if __name__ == '__main__':
+	try:
+		destroy()
+	except:
+		pass
 	setup()
 	try:
 		if getInfoFlag():
@@ -18,12 +22,15 @@ if __name__ == '__main__':
 		else:
 			run_ctrl_server(getIp(), getCtrlSocketPort(), getSecurityFlag())
 	except:
+		forwardOFF()
+		backwardOFF()
+		rightOFF()
+		leftOFF()
 		try:
-			forwardOFF()
-			backwardOFF()
-			rightOFF()
-			leftOFF()
 			control_socket_thread._stop()
+		except:
+			pass
+		try:
 			destroy()
 		except:
 			pass

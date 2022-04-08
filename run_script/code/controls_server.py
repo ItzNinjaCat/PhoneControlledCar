@@ -12,12 +12,12 @@ def recv_messages(conn, address):
             message = conn.recv(1024).decode()
             print(message)
             if message == "q":
-		print(f"Connection from {address} has been lost")
+                print(f"Connection from {address} has been lost")
                 conn.close()
                 forwardOFF()
                 backwardOFF()
                 rightOFF()
-                leftOFF()		
+                leftOFF()
                 return
             elif message == "forwardON":
                 forwardON()
@@ -81,4 +81,3 @@ def run_ctrl_server(ip, port, security_flag):
 			print(f"Connection from {address} has been established")
 			client_control_thread = Thread(target=recv_messages,args=(clientsocket,address))
 			client_control_thread.start()
-

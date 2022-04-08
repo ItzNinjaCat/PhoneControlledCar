@@ -1,34 +1,31 @@
 import RPi.GPIO as GPIO
 import time
 
+GPIO.setwarnings(False)
+
 MotorForward = 25
 MotorBackward = 24
 
-MotorRigth = 12
+MotorRight = 12
 MotorLeft = 6
 
 
 Trigger= 4
 Echo = 21
 
-
-motor_arr = [MotorForward, MotorBackward, MotorRigth, MotorLeft, Trigger]
-
 def setup():
     GPIO.setmode(GPIO.BCM)
-    for motor in motor_arr:
-        try:
-            GPIO.setup(motor, GPIO.OUT)
-        except:
-            pass
-    try:
-        GPIO.setup(Echo, GPIO.IN)
-    except:
-        pass
-		
-def destroy():	
+    GPIO.setup(MotorForward, GPIO.OUT)
+    GPIO.setup(MotorBackward, GPIO.OUT)
+    GPIO.setup(MotorRight, GPIO.OUT)
+    GPIO.setup(MotorLeft, GPIO.OUT)
+
+    GPIO.setup(Trigger, GPIO.OUT)
+    GPIO.setup(Echo, GPIO.IN)
+
+def destroy():
 	GPIO.cleanup()
-	
+
 def distance():
 	GPIO.output(Trigger, True)
 
@@ -60,9 +57,9 @@ def backwardOFF():
 	GPIO.output(MotorBackward,GPIO.LOW)
 	
 def rightON():
-	GPIO.output(MotorRigth,GPIO.HIGH)
+	GPIO.output(MotorRight,GPIO.HIGH)
 def rightOFF():
-	GPIO.output(MotorRigth,GPIO.LOW)
+	GPIO.output(MotorRight,GPIO.LOW)
 	
 def leftON():
 	GPIO.output(MotorLeft,GPIO.HIGH)
