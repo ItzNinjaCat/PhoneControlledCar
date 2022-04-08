@@ -1,4 +1,4 @@
-from layout_widget import Float_layout, distance_thread
+from layout_widget import Float_layout, distance_thread, video_thread
 from global_vars import *
 from kivy.app import App
 from kivy.config import Config 
@@ -26,5 +26,9 @@ class RcCarApplication(App):
 			pass
 		try:
 			distance_thread._stop()
+		except:
+			pass
+		try:
+			video_thread._stop()
 		except:
 			pass

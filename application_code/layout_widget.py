@@ -19,10 +19,11 @@ from global_vars import *
 from buttons import *
 Window.size = (1280, 720)
 distance_thread = Thread()
+video_thread = Thread()
 
 class Float_layout(FloatLayout):
 	def __init__(self, **kwargs):
-		global throttle, steering, flask_url, distance_thread
+		global throttle, steering, flask_url, distance_thread, video_thread
 	
 		super().__init__(**kwargs)
 		self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
@@ -124,7 +125,8 @@ class Float_layout(FloatLayout):
 					btn_settings.on_press(outside_call_flag = True)
 
 		self.capture = get_video()
-		Clock.schedule_interval(self.camera_update, 1 / 120)
+		video_thread = Thread(target = Clock.schedule_interval, args = (self.camera_update, 1 / 120))
+		video_thread.start()
 		distance_thread = Thread(target = Clock.schedule_interval, args=(self.distance_update,  1 / 120))
 		distance_thread.start()
 		
