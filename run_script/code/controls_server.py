@@ -12,7 +12,13 @@ def recv_messages(conn, address):
             message = conn.recv(1024).decode()
             print(message)
             if message == "q":
-                break
+		print(f"Connection from {address} has been lost")
+                conn.close()
+                forwardOFF()
+                backwardOFF()
+                rightOFF()
+                leftOFF()		
+                return
             elif message == "forwardON":
                 forwardON()
             elif message == "forwardOFF":
@@ -29,7 +35,7 @@ def recv_messages(conn, address):
                 leftON()
             elif message == "leftOFF":
                 leftOFF()
-    except KeyboardInterrupt:
+    except:
         conn.close()
         forwardOFF()
         backwardOFF()
