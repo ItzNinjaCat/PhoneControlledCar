@@ -1,16 +1,12 @@
 from flask import Flask, render_template, Response, request, jsonify, abort
 from gevent.pywsgi import WSGIServer
-import time
-import RPi.GPIO as GPIO
 from camera import Camera
-from controls_server import destroy, setup, run_ctrl_server, distance
-from conn_read import getIp, getCtrlSocketPort, getFlaskPort, getSecurityFlag
-from threading import Thread
-from bs4 import BeautifulSoup
 import arpreq
 import os
-cam = Camera()
 
+from GPIO_halnding import distnace
+
+cam = Camera()
 app = Flask(__name__)
 
 def gen(camera):
@@ -33,9 +29,7 @@ def limit_remote_addr():
 		list = string_list.split(",")
 		trusted = [s.strip() for s in list]
 		if mac not in trusted:
-			return abort(403)
-		else:
-			return
+			abort(403)
 
 
 @app.route('/dist', methods=['GET'])
@@ -45,19 +39,3 @@ def dist():
 @app.route('/')
 def video_feed():
     return Response(gen(cam), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-
-if __name__ == '__main__':
-    setup()
-    try:
-        controls_socket_thread =  Thread(target=run_ctrl_server,args=(getIp(), getCtrlSocketPort(), getSecurityFlag()))
-        controls_socket_thread.start()
-        wsgi_server = WSGIServer((getIp(),getFlaskPort()), app)
-        print(f"Flask server is running at http://{getIp()}:{getFlaskPort()}/")
-        wsgi_server.serve_forever()
-    except KeyboardInterrupt:
-        try:
-            destroy()
-        except:
-            pass
