@@ -1,7 +1,7 @@
 
 # *Wi-Fi Controlled Car*
 
-![Лого/Визия на проекта](https://imgur.com/gallery/eSNYyxL)
+![Лого/Визия на проекта](https://i.imgur.com/saMuNkL.jpeg)
 
 *Кратко описание на проекта - с две изречения опишете проекта си.* (задължително)
 
