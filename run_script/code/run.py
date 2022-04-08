@@ -3,7 +3,7 @@ from threading import Thread
 
 from controls_server import run_ctrl_server
 from conn_read import getIp, getCtrlSocketPort, getFlaskPort, getSecurityFlag, getInfoFlag
-from GPIO_handling import setup, destroy
+from GPIO_handling import setup, destroy, forwardOFF, backwardOFF, rightOFF, leftOFF
 from video_dist_server import app
 
 if __name__ == '__main__':
@@ -17,8 +17,13 @@ if __name__ == '__main__':
 			wsgi_server.serve_forever()
 		else:
 			run_ctrl_server(getIp(), getCtrlSocketPort(), getSecurityFlag())
-	except KeyboardInterrupt:
+	except:
 		try:
+			forwardOFF()
+			backwardOFF()
+			rightOFF()
+			leftOFF()
 			destroy()
+			control_socket_thread._stop()
 		except:
 			pass
