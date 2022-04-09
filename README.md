@@ -102,7 +102,7 @@ Ground пин на делителя на напрежение - Ground пин н
 * [Flask](https://flask.palletsprojects.com/en/2.1.x/) - *Flask е уеб framework създаден на Python.*
 * [Raspberry Pi](https://www.raspberrypi.com/) - *Raspberry Pi или RPI е серия от едноплаткови компютри с размери на кредитна карта, разработена в Обединеното кралство от специално създадена за целта фондация (Raspberry Pi Foundation) с цел популяризиране на обучението по основи на компютърните науки в училищата.*
 * [OpenCV](https://opencv.org/) - *OpenCV e библиотека предназначена главно към компютърното зрение в реално време.*
-* 
+* [Buildozer](https://buildozer.readthedocs.io/en/latest/) - Buildozer е инструмент за превръщане на Python приложения в мобилни приложения.
 ## Информация за авторите на проекта
 
 * **Симеон Христов** - *програмист, дизаинер, хардуерист* - [ItzNinjaCat](https://github.com/ItzNinjaCat)
