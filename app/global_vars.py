@@ -10,6 +10,14 @@ throttle = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 steering = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 video_frame = Image()
 button_state_dict = {'left' : True, 'right' : True, 'forward' : True, 'backward' : True}
+flask_url = ""
+
+def get_flask_url():
+	return flask_url
+
+def set_flask_url(url):
+	global flask_url
+	flask_url = url
 
 
 

@@ -3,7 +3,6 @@ from kivy.uix.image import Image
 from kivy.uix.switch import Switch
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
-from kivy.core.window import Window
 
 from kivy.uix.textinput import TextInput
 
@@ -22,16 +21,12 @@ video_thread = Thread()
 
 class Float_layout(FloatLayout):
 	def __init__(self, **kwargs):
-		global throttle, steering, flask_url, distance_thread, video_thread
+		global throttle, steering, distance_thread, video_thread
 	
 		super().__init__(**kwargs)
-		self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-		self._keyboard.bind(on_key_down=self._on_key_down)
-		self._keyboard.bind(on_key_up=self._on_key_up)
 		get_frame().size = self.size
 		get_frame().allow_stretch = True
 		get_frame().keep_ratio = False
-		self.ids['image_source'] = get_frame()
 		
 
 		#switch_AI = Switch(active = False, size_hint = (None, None),size = (83,32), pos_hint = {'x' : 0.88, 'y' : 0.88})
@@ -48,18 +43,18 @@ class Float_layout(FloatLayout):
 		self.add_widget(display_distance)
 		
 		
-		if not exists(os.getcwd() + '\data\connections.json'):
+		if not exists(os.getcwd() + '/data/connections.json'):
 			btn_settings.on_press(outside_call_flag = True)
 		else:
 			dict_list = []
-			with open(os.getcwd() + '\data\connections.json') as json_file:
+			with open(os.getcwd() + '/data/connections.json') as json_file:
 				dict_list = json.load(json_file)
 			if not len(dict_list):
 				btn_settings.on_press(outside_call_flag = True)
 			else:
 				try:
 					dict_list = []
-					with open(os.getcwd() + '\data\connections.json') as json_file:
+					with open(os.getcwd() + '/data/connections.json') as json_file:
 						dict_list = json.load(json_file)
 					
 					fail = False
@@ -94,16 +89,16 @@ class Float_layout(FloatLayout):
 							get_steering().send(message.encode())	
 						except:
 							btn_settings.on_press(outside_call_flag = True)
-							error_popup("Device is not authorized - try to either add it's mac address\nto the trusted.txt file or set security_flag to 0 is connections.txt")
+							error_popup("Device is not authorized - try to either add it's mac address/nto the trusted.txt file or set security_flag to 0 is connections.txt")
 							fail = False
 							break
 						if dict['video'] != '':
-							flask_url = dict['video']
+							set_flask_url(dict['video'])
 							if camera_update() == 1:
 								break
 							else:
 									error_popup("Unable to connect to given video feed!")
-									flask_url = dict['video']
+									set_flask_url(dict['video'])
 									dict['video'] = ''
 						fail = False
 					if fail:				
@@ -116,7 +111,7 @@ class Float_layout(FloatLayout):
 						pass
 
 						
-					with open(os.getcwd() + '\data\connections.json', "w") as outfile:
+					with open(os.getcwd() + '/data/connections.json', "w") as outfile:
 						json.dump(dict_list, outfile, indent=4,  separators=(',',': '))
 				except:
 					btn_settings.on_press(outside_call_flag = True)
@@ -126,39 +121,4 @@ class Float_layout(FloatLayout):
 		distance_thread = Thread(target = Clock.schedule_interval, args=(distance_update,  1 / 120))
 		distance_thread.start()
 		
-	def _keyboard_closed(self):
-		self._keyboard.unbind(on_key_down=self._on_key_down)
-		self._keyboard.unbind(on_key_up=self._on_key_up)
-		self._keyboard = None
-		
-	def _on_key_down(self, keyboard, keycode, text, modifiers):
-		if keycode[1] == 'w' or keycode[1] == 'up':
-				btn_forward.on_press()
-
-		elif keycode[1] == 's' or keycode[1] == 'down':
-				btn_backward.on_press()
-			
-		elif keycode[1] == 'a' or keycode[1] == 'left':
-				btn_left.on_press()
-			
-		elif keycode[1] == 'd' or keycode[1] == 'right':
-				btn_right.on_press()
-
-		return True
-
-	def _on_key_up(self, keyboard, keycode):
-		if keycode[1] == 'w' or keycode[1] == 'up':
-			btn_forward.on_release()
-				
-		elif keycode[1] == 's' or keycode[1] == 'down':
-			btn_backward.on_release()
-
-		elif keycode[1] == 'a' or keycode[1] == 'left':
-			btn_left.on_release()
-	
-		elif keycode[1] == 'd' or keycode[1] == 'right':
-			btn_right.on_release()
-			
-		return True
-
 	
