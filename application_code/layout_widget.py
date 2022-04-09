@@ -4,7 +4,6 @@ from kivy.uix.switch import Switch
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.core.window import Window
-#from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 
 from threading import Thread
@@ -23,21 +22,21 @@ video_thread = Thread()
 
 class Float_layout(FloatLayout):
 	def __init__(self, **kwargs):
-		global throttle, steering, flask_url, distance_thread, video_thread
+		global throttle, steering, distance_thread, video_thread
 	
 		super().__init__(**kwargs)
-		self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-		self._keyboard.bind(on_key_down=self._on_key_down)
-		self._keyboard.bind(on_key_up=self._on_key_up)
+		
+		
+		self.keyboard = Window.request_keyboard(self._keyboard_closed, self)
+		self.keyboard.bind(on_key_down=self._on_key_down)
+		self.keyboard.bind(on_key_up=self._on_key_up)
 		get_frame().size = self.size
 		get_frame().allow_stretch = True
 		get_frame().keep_ratio = False
-		self.ids['image_source'] = get_frame()
 		
 
 		#switch_AI = Switch(active = False, size_hint = (None, None),size = (83,32), pos_hint = {'x' : 0.88, 'y' : 0.88})
 		#self.add_widget(switch_AI)	
-
 		self.add_widget(get_frame())
 		hide_widget(get_frame())
 		self.add_widget(switch_camera)
@@ -53,16 +52,15 @@ class Float_layout(FloatLayout):
 			btn_settings.on_press(outside_call_flag = True)
 		else:
 			dict_list = []
-			with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
-				dict_list = json.load(json_file)
-			if not len(dict_list):
+			try:
+				with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
+					dict_list = json.load(json_file)
+				if not len(dict_list):
+					btn_settings.on_press(outside_call_flag = True)
+			except:
 				btn_settings.on_press(outside_call_flag = True)
-			else:
+			if len(dict_list):
 				try:
-					dict_list = []
-					with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
-						dict_list = json.load(json_file)
-					
 					fail = False
 					last_working_dict = None
 					for dict in dict_list:
@@ -107,7 +105,7 @@ class Float_layout(FloatLayout):
 							dict['video'] = ''
 						fail = False
 						if get_video().isOpened():
-							flask_url = dict['video']
+							set_flask_url(dict['video'])
 							break
 					if fail:				
 						btn_settings.on_press(outside_call_flag = True)
@@ -131,9 +129,9 @@ class Float_layout(FloatLayout):
 		distance_thread.start()
 		
 	def _keyboard_closed(self):
-		self._keyboard.unbind(on_key_down=self._on_key_down)
-		self._keyboard.unbind(on_key_up=self._on_key_up)
-		self._keyboard = None
+		self.keyboard.unbind(on_key_down=self._on_key_down)
+		self.keyboard.unbind(on_key_up=self._on_key_up)
+		
 		
 	def _on_key_down(self, keyboard, keycode, text, modifiers):
 		if keycode[1] == 'w' or keycode[1] == 'up':
@@ -167,7 +165,7 @@ class Float_layout(FloatLayout):
 
 	def distance_update(self, dt = None):
 			try:
-				msg = (requests.get(flask_url + "dist")).text
+				msg = (requests.get(get_flask_url() + "dist")).text
 				msg = round(float(msg), 2)
 				display_distance.text = "Distance to closest object is {:.2f} cm".format(msg)
 			except:

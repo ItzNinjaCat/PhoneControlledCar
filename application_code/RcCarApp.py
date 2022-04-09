@@ -9,7 +9,8 @@ Config.set('kivy','window_icon',os.path.dirname(os.getcwd()) + '\\Assets\\sprite
 class RcCarApplication(App):
 	def build(self):
 		self.icon = os.path.dirname(os.getcwd()) + '\\Assets\\sprites\\app_icon.png'
-		return Float_layout()
+		self.layout = Float_layout()
+		return self.layout
 
 	def on_stop(self):
 		try:

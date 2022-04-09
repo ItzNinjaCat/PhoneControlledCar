@@ -7,6 +7,7 @@ from kivy.uix.switch import Switch
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
+from kivy.app import App
 
 from global_vars import *
 
@@ -136,9 +137,7 @@ btn_forward = Button_forward()
 btn_backward = Button_backward()
 switch_camera = Switch_camera()
 display_distance = Distance_display()
-flask_url = ""
-frames_per_second = 1 / 30
-distance_update_timer = 6
+
 
 class Button_settings(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
@@ -161,12 +160,15 @@ class Button_settings(ButtonBehavior, Image):
 		if exists(os.path.dirname(os.getcwd()) + "\Assets\data\connections.json"):	
 			try:
 				dict_list = []
-				with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
-					dict_list = json.load(json_file)
-				dict = dict_list[-1]
-				self.ip_textinput.text = dict['ip']
-				self.port_textinput.text = dict['port']
-				self.video_server_url_textinput.text = dict['video']
+				try:
+					with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
+						dict_list = json.load(json_file)
+					dict = dict_list[-1]
+					self.ip_textinput.text = dict['ip']
+					self.port_textinput.text = dict['port']
+					self.video_server_url_textinput.text = dict['video']
+				except:
+					pass
 			except:
 				pass
 		self.float.add_widget(self.ip_textinput)
@@ -182,13 +184,15 @@ class Button_settings(ButtonBehavior, Image):
 		try:
 			if exists(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json'):
 				dict_list = []
-				with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
-					dict_list = json.load(json_file)
-				dict = dict_list[-1]
-				self.ip_textinput.text = dict['ip']
-				self.port_textinput.text = dict['port']
-				self.video_server_url_textinput.text = dict['video']
-
+				try:
+					with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
+						dict_list = json.load(json_file)
+					dict = dict_list[-1]
+					self.ip_textinput.text = dict['ip']
+					self.port_textinput.text = dict['port']
+					self.video_server_url_textinput.text = dict['video']
+				except:
+					pass
 				
 		except:
 			pass
@@ -206,6 +210,13 @@ class Button_settings(ButtonBehavior, Image):
 			set_all_states({'left' : False, 'right' : False, 'forward' : False, 'backward' : False})
 			self.popup.dismiss()
 			self.disabled = False
+			self.ip_textinput.focus = False
+			self.port_textinput.focus = False
+			self.video_server_url_textinput.focus = False
+			app = App.get_running_app()
+			app.layout.keyboard.focus = True
+			app.layout.keyboard.bind(on_key_down=app.layout._on_key_down)
+			app.layout.keyboard.bind(on_key_up=app.layout._on_key_up)
 		except:
 			pass
 
@@ -262,19 +273,21 @@ class Button_settings(ButtonBehavior, Image):
 			if not get_video().isOpened() and dict['video'] != '':
 				error_popup("Unable to connect to given video feed!")
 			elif get_video().isOpened():
-				flask_url = dict['video']
-	
+				set_flask_url(dict['video'])
 			try:
 				dict_list = []
-				with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
-					dict_list = json.load(json_file)
-				flag = False
-				for i in range(len(dict_list)):
-					if dict_list[i]['ip'] == dict['ip'] and dict_list[i]['port'] == dict['port']:
-						dict_list[i] = dict
-						flag = True
-						break
-				if not flag:
+				try:
+					with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json') as json_file:
+						dict_list = json.load(json_file)
+					flag = False
+					for i in range(len(dict_list)):
+						if dict_list[i]['ip'] == dict['ip'] and dict_list[i]['port'] == dict['port']:
+							dict_list[i] = dict
+							flag = True
+							break
+					if not flag:
+						dict_list.append(dict)
+				except:
 					dict_list.append(dict)
 				with open(os.path.dirname(os.getcwd()) + '\Assets\data\connections.json', "w") as outfile:
 					json.dump(dict_list, outfile, indent=4,  separators=(',',': '))
@@ -292,6 +305,13 @@ class Button_settings(ButtonBehavior, Image):
 				set_all_states({'left' : False, 'right' : False, 'forward' : False, 'backward' : False})
 				self.popup.dismiss()
 				self.disabled = False
+				self.ip_textinput.focus = False
+				self.port_textinput.focus = False
+				self.video_server_url_textinput.focus = False
+				app = App.get_running_app()
+				app.layout.keyboard.focus = True
+				app.layout.keyboard.bind(on_key_down=app.layout._on_key_down)
+				app.layout.keyboard.bind(on_key_up=app.layout._on_key_up)
 			except:
 				pass
 		
@@ -307,7 +327,6 @@ class Button_settings(ButtonBehavior, Image):
 			self.disabled = True
 
 			if not outside_call_flag:
-				print("here")
 				hide_widget(self.close_btn, False)
 			else:
 				hide_widget(self.close_btn)
