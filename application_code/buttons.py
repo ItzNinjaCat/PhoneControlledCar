@@ -149,7 +149,7 @@ class Button_settings(ButtonBehavior, Image):
 		self.size_hint = (0.1, 0.1)
 		self.float = FloatLayout(size = (600, 400))
 		
-		self.close_btn = Button(size_hint = (None, None), size = (50, 50), pos_hint = {'x' : 0.95, 'y' : 0.85}, background_normal = os.path.dirname(os.getcwd()) + '\\Assets\\sprites\\close.png')
+		self.close_btn = Button(size_hint = (None, None), size = (50, 50), pos_hint = {'x' : 0.93, 'y' : 0.85}, background_normal = os.path.dirname(os.getcwd()) + '\\Assets\\sprites\\close.png')
 		hide_widget(self.close_btn)
 		self.close_btn.bind(on_press=self.close_btn_callback)
 		self.conn_btn = Button(text = 'Connect', size_hint = (0.8, 0.25), pos_hint = {'x' : 0.1 , 'y' : 0.1})

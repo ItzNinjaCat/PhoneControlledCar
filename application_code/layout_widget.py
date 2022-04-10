@@ -145,7 +145,10 @@ class Float_layout(FloatLayout):
 			
 		elif keycode[1] == 'd' or keycode[1] == 'right':
 				btn_right.on_press()
-
+		elif keycode[1] == 'escape':
+			btn_settings.on_press()
+		elif keycode[1] == 'v':
+			switch_camera.active = not switch_camera.active
 		return True
 
 	def _on_key_up(self, keyboard, keycode):
