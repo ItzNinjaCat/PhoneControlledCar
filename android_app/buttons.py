@@ -23,9 +23,8 @@ class Button_left(ButtonBehavior, Image):
 		super(Button_left, self).__init__(**kwargs)
 		self.always_relese = False
 		self.source = os.getcwd() + '/sprites/left.png'
-		self.pos_hint = {'x' : 0.04, 'y' : 0.2}
-		self.allow_strech = True
-		self.size_hint = (0.1, 0.1)
+		self.pos_hint = {'x' : 0.06, 'y' : 0.2}
+		self.size_hint = (0.1, 0.2)
 
 	def on_press(self):
 		if not get_button_right_state():
@@ -45,8 +44,8 @@ class Button_right(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
 		super(Button_right, self).__init__(**kwargs)
 		self.source = os.getcwd() + '/sprites/right.png'
-		self.pos_hint = {'x' : 0.12, 'y' : 0.2}
-		self.size_hint = (0.1, 0.1)
+		self.pos_hint = {'x' : 0.22, 'y' : 0.2}
+		self.size_hint = (0.1, 0.2)
 
 	def on_press(self):
 		if not get_button_left_state():
@@ -66,8 +65,8 @@ class Button_forward(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
 		super(Button_forward, self).__init__(**kwargs)
 		self.source = os.getcwd() + '/sprites/forward.png'
-		self.pos_hint = {'x' : 0.75, 'y' : 0.32}
-		self.size_hint = (0.1, 0.1)
+		self.pos_hint = {'x' : 0.8, 'y' : 0.4}
+		self.size_hint = (0.1, 0.2)
 
 	def on_press(self):
 		if not get_button_backward_state():
@@ -87,8 +86,8 @@ class Button_backward(ButtonBehavior, Image):
 	def __init__(self, **kwargs):
 		super(Button_backward, self).__init__(**kwargs)
 		self.source = os.getcwd() + '/sprites/backward.png'
-		self.pos_hint = {'x' : 0.75, 'y' : 0.12}
-		self.size_hint = (0.1, 0.1)
+		self.pos_hint = {'x' : 0.8, 'y' : 0.12}
+		self.size_hint = (0.1, 0.2)
 
 	def on_press(self):
 		if not get_button_forward_state():
@@ -107,11 +106,11 @@ class Button_backward(ButtonBehavior, Image):
 class Distance_display(Label):
 	def __init__(self, **kwargs):
 		super(Distance_display, self).__init__(**kwargs)
-		self.pos_hint = {'x' : 0.45, 'y' : 0.87}
-		self.size_hint = (0.3, 0.3)
+		self.pos_hint = {'x' : 0.4, 'y' : 0.85}
+		self.size_hint = (0.1, 0.1)
 		self.text = "Distance sensor is not connected"
 		self.color = "red"
-		self.font_size = 35
+		self.font_size = 55
 		
 class Switch_camera(Switch):
 	def __init__(self, **kwargs):
@@ -154,8 +153,8 @@ def camera_update(dt = None):
 		buf1 = PIL.Image.open(requests.get(img_url, stream=True).raw)
 		buf1 = PIL.ImageOps.flip(buf1)
 		buf = buf1.tobytes()
-		texture1 = Texture.create(size=(buf1.size[0], buf1.size[1]), colorfmt='bgr')
-		texture1.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+		texture1 = Texture.create(size=(buf1.size[0], buf1.size[1]), colorfmt='rgb')
+		texture1.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
 		get_frame().texture = texture1
 		return 1
 	except:
@@ -168,7 +167,7 @@ class Button_settings(ButtonBehavior, Image):
 		
 		self.always_relese = False
 		self.source = os.getcwd() + '/sprites/settings.png'
-		self.pos_hint = {'x' : 0.01, 'y' : 0.87}
+		self.pos_hint = {'x' : 0.01, 'y' : 0.85}
 		self.size_hint = (0.1, 0.1)
 		self.float = FloatLayout(size = (1280, 720))
 		
