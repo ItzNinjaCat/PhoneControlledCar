@@ -1,0 +1,4 @@
+security = 0 # security flag - set to 0 by default, changing it to 1 requires adding a list of trusted mac adresses in the trusted.txt file separated by commas
+ctrl_socket_port = 50000 # port for the socket server - set to 50000 by default
+info_on = 1 # info status flag - set to 1 by default, setting it to 0 means there will be no video stream and data from the ultrasound sensor
+flask_port = 50200 # port for the flask server - set to 50200 by default
