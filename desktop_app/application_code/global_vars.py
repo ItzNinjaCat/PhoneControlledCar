@@ -9,6 +9,8 @@ from kivy.uix.image import Image
 
 throttle = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 steering = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+throttle.settimeout(1)
+steering.settimeout(1)
 video_feed = cv2.VideoCapture()
 video_frame = Image()
 button_state_dict = {'left' : True, 'right' : True, 'forward' : True, 'backward' : True}
@@ -62,6 +64,10 @@ def get_throttle():
 def set_throttle(new_throttle):
 	global throttle
 	throttle = new_throttle
+	try:
+		throttle.settimeout(1)
+	except:
+		pass
 
 def get_steering():
 	return steering
@@ -69,6 +75,10 @@ def get_steering():
 def set_steering(new_steering):
 	global steering
 	steering = new_steering
+	try:
+		steering.settimeout(1)
+	except:
+		pass
 	
 	
 
